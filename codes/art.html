@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>art-template</title>
+</head>
+
+<body>
+    测试 art template , 这个页面的console 里会输出一个很神奇的字符串:! 
+
+    <!-- 模板引擎不关心内容, 只关心它认识的字符串 进行解析 -->
+
+    <script src="node_modules/art-template/lib/template-web.js"></script>
+    <script type="text/template" id="temp1">
+       <!DOCTYPE html>
+       <html lang="en">
+       <head>
+           <meta charset="UTF-8">
+           <title>Document</title>
+       </head>
+       <body>
+           <ul>
+               <li>{{ name }}</li>
+           </ul>
+       </body>
+       </html>
+    </script>
+
+    <script>
+        var res = template('temp1', {
+            name: 'Jack'
+        })
+        console.log(res)
+    </script>
+</body>
+
+</html>

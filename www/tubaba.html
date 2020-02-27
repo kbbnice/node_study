@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页</title>
+    <style>
+        .father {
+            text-align: center;
+        }
+
+        .wrap {
+            position: relative;
+            text-align: center;
+            height: 40px;
+            overflow: hidden;
+        }
+
+        ul {
+            height: auto;
+        }
+
+        li {
+            display: inline-block;
+            width: 100px;
+            background-color: #ffeeee;
+            height: 30px;
+            margin: 5px;
+        }
+
+        i {
+            position: relative;
+            color: #000;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="father">
+        <div class="wrap">
+            <ul>
+                <li>最可爱</li>
+                <li>最可爱</li>
+                <li>最可爱</li>
+                <li>最可爱</li>
+                <li>最可爱</li>
+            </ul>
+        </div>
+        <i class="down">我是向下箭头</i>
+        <i class="up">我是向上箭头</i>
+    </div>
+
+    <script>
+        var ul = document.getElementsByTagName('ul')[0]
+        arr = [
+            '最可爱',
+            '最可爱',
+            '最可爱',
+            '最可爱',
+            '最可爱',
+            '最可爱',
+            '最可爱',
+            '最可爱',
+            '最可爱',
+            '最可爱',
+            '最可爱',
+            '最可爱',
+            '最可爱',
+            '最可爱',
+            '最可爱',
+            '最可爱',
+            '最可爱',
+            '最可爱',
+            '最可爱',
+            '最可爱',
+            '最可爱',
+            '最可爱',
+            '最可爱',
+        ]
+
+        var content = ''
+        arr.forEach(el => {
+            content += `
+                <li>${el}</li>
+            `
+        });
+
+        ul.innerHTML = content
+        var wrap = document.getElementsByClassName('wrap')[0]
+        var down = document.getElementsByClassName('down')[0]
+        var up = document.getElementsByClassName('up')[0]
+
+        // 判断高度: 
+       window.addEventListener('resize', checkShowMore, false)
+       window.addEventListener('load', checkShowMore, false)
+
+        function checkShowMore() {
+            if (ul.offsetHeight > 40) {
+                console.log(ul.offsetHeight)
+
+                down.style.display = 'block'
+                up.style.display = 'none'
+            } else {
+                down.style.display = 'none'
+                up.style.display = 'block'
+            }
+        }
+
+        function showMore() {
+            wrap.style.height = 'auto'
+            down.style.display = 'none'
+            up.style.display = 'block'
+        }
+        function hideMore() {
+            wrap.style.height = '40px'
+            up.style.display = 'none'
+            down.style.display = 'block'
+        }
+        down.addEventListener('click', showMore, false)
+        up.addEventListener('click', hideMore, false)
+
+        
+    </script>
+</body>
+
+</html>

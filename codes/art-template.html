@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ url }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        table {
+            padding-left: 20px;
+        }
+
+        table th {
+            text-align: left;
+        }
+
+        table td:not(:first-child) {
+            height: 30px;
+            padding-right: 30px;
+            min-width: 100px;
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            vertical-align: bottom;
+        }
+        a {
+            text-decoration: none;
+        }
+        a:visited {
+            color: blue;
+        }
+        a:hover {
+            color: rgb(95, 95, 255);
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <th>*</th>
+            <th>名称</th>
+            <th>文件大小</th>
+            <th>创建时间</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <a href="http://{{ lastPath }}">../  返回上级</a>
+                <!-- reqPath.split('/')[reqPath.split('/').length - 1] -->
+            </td>
+        </tr>
+        <!-- 模板语法大发好, 可以写js内容 哈哈哈哈哈 -->
+        <!-- 模板语法不关心任何内容, 只关心自己认识的符号里的东西, 且模板语法里支持 js 语法 -->
+        {{ each files }}
+
+        <tr>
+            <td>
+                {{ if $value.indexOf('.') == -1}}
+                <img class="icon" src="/static/dir.png" alt="" />
+                {{ else }}
+                <img class="icon" src="/static/file.png" alt="" />
+                {{/if}}
+            </td>
+            <td>
+                <a href="http://{{ reqPath }}/{{ $value }}">{{ $value }}</a>
+            </td>
+            <td>
+                {{ }}
+            </td>
+            <td>
+                {{ }}
+            </td>
+        </tr>
+
+        {{/each}}
+    </table>
+</body>
+
+</html>

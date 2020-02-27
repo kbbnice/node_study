@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>message board</title>
+    <link rel="stylesheet" href="../public/css/main.css">
+</head>
+
+<body>
+    <h1>留言板</h1>
+    <button id="btn">发表留言</button>
+    <table>
+        {{ each comments }}
+        <tr>
+            <td>{{ $value.message }}</td>
+            <td>{{ $value.name }}</td>
+            <td>{{ $value.dateTime }}</td>
+        </tr>
+        {{/each}}
+        <!-- <tr>
+            <td>I am message</td>
+        </tr>
+        <tr>
+            <td>I am message</td>
+        </tr> -->
+    </table>
+</body>
+
+<script>
+    var btn = document.getElementById('btn')
+    btn.addEventListener('click', function() {
+        window.location.href = '/post'
+    }, false)
+</script>
+
+</html>

@@ -1,0 +1,50 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    padding: 30px;
+}
+
+button {
+    width: 100px;
+    height: 40px;
+    border: none;
+    background-color: #28bf13;
+    border-radius: 5px;
+    outline: none;
+    color: #fff;
+    font-size: 16px;
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+button:active {
+    background-color: rgb(35, 148, 0);
+}
+
+table {
+    border-collapse: separate;
+    width: 100%;
+    border-spacing: 0;
+    color: #333;
+}
+
+tr {}
+
+td {
+    border: 1px solid #ddd;
+    height: 40px;
+    padding-left: 30px;
+    border-bottom: none;
+}
+
+tr:first-child td {
+    border-radius: 10px 10px 0 0;
+}
+
+tr:last-child td {
+    border: 1px solid #ddd;
+    border-radius: 0 0 10px 10px;
+}

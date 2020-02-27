@@ -1,0 +1,6 @@
+
+
+exports.info = {
+    name: 'pink'
+  }
+  
