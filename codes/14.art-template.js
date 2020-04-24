@@ -11,8 +11,8 @@ var template = require('art-template')
 var server = http.createServer()
 
 server.on('request', function(req, res) {
-  var staticDir = 'D:/myfiles/project/personalPro/node/codes'
-  var wwwDir = 'D:/myfiles/project/personalPro/node/www'
+  var staticDir = '../codes'
+  var wwwDir = '../www'
   var filePath = wwwDir + '/index.html'
   var url = req.url
   var reqHost = req.headers.host
@@ -85,11 +85,13 @@ server.on('request', function(req, res) {
   } else {
     fs.readFile(filePath, function(error, data) {
       if (error) {
+        console.log(error)
         res.setHeader('Content-Type', 'text/html; charset=utf-8')
         res.end('404 唔 ~ 我找不到了')
       } else {
         // res.setHeader('Content-Type', 'text/html; charset=utf-8')
-        res.end(data)
+        
+        res.end(data.toString())
       }
     })
   }

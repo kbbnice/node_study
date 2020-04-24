@@ -1,11 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我是首页</title>
+    <style>
+        body {
+            background-color: rgba(235, 250, 255, 0.596);
+            font-size: 14px;
+        }
+
+        a {
+            /* display: block; */
+            margin-right: 20px;
+        }
+
+        .code-wrap {}
+
+        .box-white {
+            /* width: 100px; */
+            height: 100px;
+            box-shadow: 0 0 40px 10px rgba(255, 255, 255, 0.719);
+        }
+
+        .box-white-inner {
+            height: calc(100% - 30px);
+            box-shadow: 0 0 10px 10px rgba(255, 255, 255, 0.719) inset;
+            padding: 15px;
+        }
+
+        .codebox {}
+
+        .btn-copy {
+            background-color: rgba(255, 255, 255, 0.5);
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 10px;
+            box-shadow: 1px 1px 5px 1px #b2b2b2;
+
+        }
+
+        .btn-copy:active {
+            background-color: rgba(241, 241, 241, 0.5);
+            box-shadow: 1px 1px 5px 1px #6c6b6b;
+        }
+    </style>
 </head>
+
 <body>
-    我是首页
+    <a href="./htmls/check.html">check</a>
+    <a href="./past.html">剪贴板粘贴页面</a>
+    <a href="./test.html">test</a>
+    <a href="./htmls/login.html">login</a>
+    <a href="./htmls/check.html">check</a>
+    <a href="./htmls/check.html">check</a>
+    <a href="./htmls/check.html">check</a>
+    <a href="./htmls/check.html">check</a>
+    <a href="./htmls/check.html">check</a>
+
+    <div class="code-wrap">
+        <div class="box-white">
+            <div class="box-white-inner">
+                <div>
+                    <code>
+<xmp class="codebox">
+    <div class="name">
+        mayasdffsfsdfp ifjdpaisfjadf
+        dfasdsfsfdf
+    </div>
+</xmp>
+                    </code>
+                </div>
+            </div>
+        </div>
+        <div class="btn-copy">按钮</div>
+    </div>
+
+    <script>
+        var content = document.getElementsByClassName('codebox')[0].innerHTML
+        var copyBtn = document.getElementsByClassName('btn-copy')[0]
+        copyBtn.addEventListener('click', function () {
+            copyToClip(content, 'a')
+        })
+        function copyToClip(content, message) {
+            var aux = document.createElement("input");
+            aux.setAttribute("value", content);
+            document.body.appendChild(aux);
+            aux.select();
+            document.execCommand("copy");
+            document.body.removeChild(aux);
+            if (message == null) {
+                alert("复制成功");
+            } else {
+                alert(message);
+            }
+        }
+
+
+    </script>
 </body>
+
 </html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>图片粘贴</title>
+    <style>
+        #img {
+            width: 500px;
+        }
+
+        #input img {
+            cursor: pointer;
+        }
+
+        img.active {
+            border: 1px solid rgb(111, 111, 238);
+
+        }
+
+        #input {
+            min-height: 200px;
+            border: 1px solid grey;
+        }
+
+        .btns span {
+            background-color: #ffeeee;
+            display: inline-block;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="edit">
+        <img src="./images/logo.png" alt="">
+        <div class="btns">
+            <span id="scaleBtn">缩放</span>
+        </div>
+        <div id="input" contenteditable="true"></div>
+    </div>
+    <img id="img" src="" alt="">
+    通过Ctrl + v将图片粘贴
+</body>
+
+<script>
+
+    var edit = document.getElementById('edit')
+    var input = document.getElementById('input')
+
+    function addClass(el, classname) {
+        el.classList.add(classname)
+    }
+    function removeClass(el, classname) {
+        el.classList.remove(classname)
+    }
+
+    var curEl = null
+    // 为图片添加选中属性：
+    input.addEventListener('click', function (e) {
+        var target = e.target
+        if (target.tagName !== 'IMG' && curEl !== null) {
+            removeClass(curEl, 'active')
+            
+        }
+
+        if (curEl == null) {
+            curEl = target
+            addClass(curEl, 'active')
+            return
+        }
+
+        if (curEl !== target) {
+            removeClass(curEl, 'active')
+            curEl = target
+            addClass(curEl, 'active')
+        }
+    })
+    setPasteImg();
+
+    edit.addEventListener('blur', function () {
+        removeClass(curEl, 'active')
+    })
+
+
+
+    // 缩放
+    var scaleBtn = document.getElementById('scaleBtn')
+    scaleBtn.addEventListener('click', function () {
+        console.log(curEl)
+        if (curEl == null) return;
+        curEl.style.transform = 'scale(0.5)'
+    })
+
+
+
+    //获取粘贴板上的图片
+    function setPasteImg() {
+        //粘贴事件
+        document.addEventListener('paste', function (event) {
+            if (event.clipboardData || event.originalEvent) {
+                var clipboardData = (event.clipboardData || event.originalEvent.clipboardData);
+                if (clipboardData.items) {
+                    var blob = {
+                        type: 'text',
+                        content: clipboardData.getData('text/plain')
+
+                    }
+                    for (var i = 0; i < clipboardData.items.length; i++) {
+                        console.log(clipboardData.items[i].type)
+                        if (clipboardData.items[i].type.indexOf("image") !== -1) {
+                            blob.type = 'image'
+                            blob.content = clipboardData.items[i].getAsFile();
+                        }
+                    }
+                    if (blob.type == 'image') {
+                        var render = new FileReader();
+                        render.onload = function (evt) {
+                            //输出base64编码
+                            var base64 = evt.target.result;
+                            var newImg = document.createElement('img')
+                            newImg.src = base64
+                            input.appendChild(newImg)
+
+                        }
+                        return render.readAsDataURL(blob.content);
+                    }
+
+                    // 如果不是图片，就粘贴文字
+                    input.innerText += blob.content
+                }
+
+            }
+
+        })
+
+    }
+
+</script>
+
+</html>
