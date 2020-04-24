@@ -7,8 +7,45 @@
     <link rel="stylesheet" href="../static/css/highjs/darcula.css">
     <title>Document</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            line-height: 20px;
+            font-size: 14px;
+        }
+
+        .area {
+            position: relative;
+        }
+
+        .codes {
+            margin-left: 100px;
+        }
+        .hljs {
+            padding: 10px;
+
+        }
+
+        ul {
+            position: absolute;
+            width: 100px;
+            background-color:#2b2b2b;
+            top: 0;
+            padding: 10px 0;
+            min-height: 20px;
+        }
+
+        li {
+            list-style: none;
+            color: #af9dea;
+            text-align: right;
+            margin-right: 10px;
+            
+
+        }
+
         .wrap {
-            height: 100px;
+            min-height: 100px;
             border: 1px solid grey;
         }
     </style>
@@ -19,17 +56,18 @@
     <button id="btn">
         添加
     </button>
-    <pre>
-        <code class="hljs xml code1">
+    <div class="area">
+        <!-- <pre class="codes"> -->
+        <code class="code1 html codes">
             阿萨德
         </code>
-    </pre>
+    <!-- </pre> -->
+        <ul id="lineNum">
+            <li>1</li>
+        </ul>
+    </div>
+
     <button id="copyBtn">复制</button>
-    <pre>
-        <code class="hljs xml">
-          <div class="name">阿斯顿发送到</div>
-        </code>
-    </pre>
 
     <script src="../static//js/highlight.pack.js"></script>
     <script>
@@ -63,6 +101,15 @@
                 hljs.highlightBlock(doceEl[i]);
             }
 
+            var height = code1.offsetHeight
+            console.log(height)
+            liLen = height / 20
+            var str = ''
+            for(var j = 1; j < liLen; j++) {
+                str += ('<li>' + j +  '</li>')
+            }
+            document.getElementById('lineNum').innerHTML = str
+
         }
         // btn.onclick = function () {
         //     var text = document.getElementsByClassName('wrap')[0].innerText
@@ -95,6 +142,9 @@
                 alert(message);
             }
         }
+
+        // 让 ul 行数等于 代码行数
+
 
     </script>
 </body>
