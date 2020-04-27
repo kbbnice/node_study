@@ -1,4 +1,3 @@
-// 读取html文件
 var express = require('express')
 
 // 解析 post 参数
@@ -31,24 +30,19 @@ app.all('*', function (req, res, next) {
 app.post('/', function (req, res) {
     // console.log(req.body)
     res.header('Content-Type', 'application/json; charset=utf-8')
-    var resData = ''
-    fs.readFile('e:/test.html', function (error, data) {
+    var data = req.body.codeStr
+
+
+    res.send({
+        data: data
+    })
+    fs.writeFile('e:/test.txt', data, function (error) {
         if (error) {
-            console.log('读取文件失败')
+            console.log('文件写入失败: ', error)
         } else {
-            resData = data.toString()
-            console.log(resData)
-            res.send({
-                data: resData
-            })
-            // console.log(data.toString())
-            
+            console.log('文件写入成功');
         }
     })
-
-   
-
-
 
 })
 

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>代码保存页</title>
+    <link rel="stylesheet" href="../static/css/highjs/default.css">
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        line-height: 20px;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    .box {
+        font-size: 0;
+        padding: 20px;
+    }
+
+    .model {
+        display: inline-block;
+        width: 40%;
+        border: 1px solid grey;
+        font-size: 14px;
+        min-height: 100px;
+        vertical-align: top;
+    }
+
+
+    .model:first-child {
+        margin-right: 2%;
+        padding: .5em;
+    }
+
+    code {
+        display: block;
+        height: 100%;
+    }
+
+    .btns {
+        margin-bottom: 20px;
+    }
+
+    button {
+        padding: 10px 20px;
+    }
+</style>
+
+<body>
+    <div class="box">
+
+        <div id="defaultCode" class="model" contenteditable="true"></div>
+        <div id="transCode" class="model">
+            <code class="hljs html">
+
+            </code>
+        </div>
+        <div class="btns">
+            <button id="transBtn">转换</button>
+        </div>
+    </div>
+
+    <script src="../static/js/highlight.pack.js"></script>
+    <script src="../static/js/jquery-1.12.4.js"></script>
+    <script>
+
+        // 设置代码高亮
+        function setHljs(el) {
+            hljs.highlightBlock(el);
+        }
+
+        // // 当页面加载完成后渲染：
+        // document.addEventListener('DOMContentLoaded', function (event) {
+        //     var doceEl = document.querySelectorAll('code')
+        //     for (var i = 0; i < doceEl.length; i++) {
+        //         setHljs(docEl)
+        //     }
+        // });
+
+        // 添加代码并高亮：
+        function addHlCode(el, content) {
+            el.innerText = content
+            setHljs(el)
+        }
+
+        // 复制左边的内容到剪贴板：
+        function transformCode() {
+            var defaultCode = document.getElementById('defaultCode')
+            var codeText = defaultCode.innerText
+            saveCode(codeText)
+
+        }
+
+        var transBtn = document.getElementById('transBtn')
+        transBtn.addEventListener('click', transformCode)
+
+        // transformCode()
+
+        function saveCode(str) {
+            $.ajax({
+                url: 'http://localhost:9999',
+                type: 'post',
+                data: {
+                    codeStr: str
+                },
+                dataType: 'json',
+                success: function (res) {
+                    var newCode = document.getElementById('transCode')
+                    console.log(res)
+                    console.log(res.responseText)
+                    addHlCode(newCode, res.data)
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        }
+
+        
+
+
+
+    </script>
+</body>
+
+</html>

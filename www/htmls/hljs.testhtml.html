@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>代码保存页</title>
+
+    <link rel="stylesheet" href="../static/css/highjs/railscasts.css">
+
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        line-height: 20px;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    .hljs {
+        padding: 10px;
+    }
+
+    .trans-code {
+        position: relative;
+        vertical-align: middle;
+    }
+
+    .trans-code pre {
+        padding: 0;
+        margin-left: 50px;
+    }
+
+    .trans-code .line-num {
+        position: absolute;
+        background-color: #232323;
+        width: 50px;
+        border-right: 1px solid grey;
+        padding: 10px 0;
+        color: rgb(255, 220, 191);
+        text-align: right;
+    }
+
+    .trans-code .line-num li {
+        padding-right: 8px;
+        font-size: 13px;
+    }
+
+    .trans-code .copy-btn {
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 4px 8px;
+        margin: 5px;
+        border-radius: 5px;
+        background-color: rgb(173, 183, 190);
+        color: #fff;
+    }
+</style>
+
+<body>
+
+
+    <script src="../static/js/highlight.pack.js"></script>
+    <script src="../static/js/jquery-1.12.4.js"></script>
+    <script>
+
+        // 创建博客内容
+        createBlogCode()
+        function createBlogCode() {
+
+            // ajax 
+            var ajax = {
+                get: function (url, fn) {
+                    // XMLHttpRequest对象用于在后台与服务器交换数据   
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', url, true);
+                    xhr.onreadystatechange = function () {
+                        // readyState == 4说明请求已完成
+                        if (xhr.readyState == 4 && xhr.status == 200 || xhr.status == 304) {
+                            // 从服务器获得数据 
+                            fn.call(this, xhr.responseText);
+                        }
+                    };
+                    xhr.send();
+                },
+                // datat应为'a=a1&b=b1'这种字符串格式，在jq里如果data为对象会自动将对象转成这种字符串格式
+                post: function (params) {
+                    url = params.url
+                    data = params.data
+                    fn = params.fn
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", url, true);
+                    // 添加http头，发送信息至服务器时内容编码类型
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
+
+                            // 返回数据：
+                            fn.call(this, JSON.parse(xhr.responseText));
+                        }
+                    };
+                    xhr.send(data);
+                }
+            }
+
+            // 高亮：
+            function highlightCode(el, codes) {
+                var hCode = hljs.highlight('html', codes).value
+                el.innerHTML = hCode
+                return hCode
+            }
+
+            // 添加行数
+            function createLineNum(codeBox) {
+                // 添加行数：
+                var codeH = codeBox.offsetHeight - 20
+                var lineNum = codeH / 20
+                console.log(codeH)
+                var lineNumBox = codeBox.parentNode.parentNode.getElementsByClassName('line-num')[0]
+                var str = ''
+                for (var i = 0; i < lineNum; i++) {
+                    var line = i + 1
+                    str += ('<li>' + line + '</li>')
+                }
+                lineNumBox.innerHTML = str
+            }
+
+            // 创建一个代码显示区
+            function createTransCodeBox() {
+                var div = document.createElement('div')
+                div.className = 'trans-code'
+                div.innerHTML = `
+                <ul class="line-num">
+                    <li>
+                        1
+                    </li>
+                </ul>
+                <pre><code class="hljs code html">1</code></pre>
+                <button class="copy-btn">复制</button>
+            `
+                var newDiv = document.body.appendChild(div)
+
+                // 请求数据：
+                ajax.post({
+                    url: 'http://localhost:9999',
+                    data: '',
+                    fn: function (res) {
+                        var codeBox = newDiv.getElementsByClassName('code')[0]
+
+                        // 添加代码
+                        var hCode = highlightCode(codeBox, res.data)
+
+                        // 添加行数：
+                        createLineNum(codeBox)
+
+                        // 添加复制功能： 
+                    }
+                })
+            }
+
+            createTransCodeBox()
+
+        }
+    </script>
+</body>
+
+</html>

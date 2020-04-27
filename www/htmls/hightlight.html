@@ -81,7 +81,6 @@
         // <div class="name">我还内容</div>
         // <div class="name">我还内容</div>`
         var a = code1.innerHTML
-        console.log(a)
         document.addEventListener('DOMContentLoaded', function (event) {
             var doceEl = document.querySelectorAll('code')
             for (var i = 0; i < doceEl.length; i++) {
@@ -131,7 +130,8 @@
         }
         function copyToClip(content, message) {
             var aux = document.createElement("textarea");
-            aux.setAttribute("value", content);
+            aux.value = content
+            console.log('content', content)
             document.body.appendChild(aux);
             aux.select();
             document.execCommand("copy");

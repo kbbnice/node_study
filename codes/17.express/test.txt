@@ -1,0 +1,10 @@
+fs.writeFile('./test.txt', data, function (error) {
+        if (error) {
+            console.log('文件写入失败: ', error)
+        } else {
+            console.log('文件写入成功');
+
+
+        }
+    })
+

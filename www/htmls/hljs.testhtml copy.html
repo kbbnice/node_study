@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>代码保存页</title>
+    <!-- <link rel="stylesheet" href="../static/css/highjs/sunburst.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/solarized-light.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/solarized-dark.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/shades-of-purple.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/routeros.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/rainbow.css"> -->
+    <!-- 也可 -->
+    <link rel="stylesheet" href="../static/css/highjs/railscasts.css">
+    <!-- <link rel="stylesheet" href="../static/css/highjs/qtcreator_light.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/purebasic.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/pojoaque.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/paraiso-dark.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/ocean.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/obsidian.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/night-owl.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/monokai-sublime.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/monokai.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/nord.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/a11y-dark.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/a11y-light.css"> -->
+    <!--可以 -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/androidstudio.css">    -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/brown-paper.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/darcula.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/dracula.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/foundation.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/gml.css"> -->
+
+    <!-- 好帅 -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/gradient-dark.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/gruvbox-dark.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/hopscotch.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/idea.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/hybrid.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/ir-black.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/isbl-editor-dark.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/kimbie.dark.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/kimbie.light.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/lightfair.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highjs/mono-blue.css"> -->
+
+
+
+
+
+
+
+
+
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        line-height: 20px;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    .box {
+        font-size: 0;
+        padding: 20px;
+    }
+
+    .model {
+
+        border: 1px solid grey;
+        font-size: 14px;
+        min-height: 100px;
+    }
+
+    .hljs {
+        padding: 10px;
+    }
+
+    code {
+        display: block;
+        height: 100%;
+    }
+
+    .trans-code {
+        position: relative;
+        vertical-align: middle;
+    }
+
+    ul {
+        position: absolute;
+        background-color: #232323;
+        width: 50px;
+        border-right: 1px solid grey;
+        padding: 10px 0;
+        color: #fff;
+        text-align: right;
+    }
+
+    ul li {
+        padding-right: 5px;
+    }
+
+    .trans-code pre {
+        padding: 0;
+        margin-left: 50px;
+    }
+
+    .btns {
+        margin-bottom: 20px;
+    }
+
+    button {
+        padding: 10px 20px;
+    }
+</style>
+
+<body>
+    <div class="box">
+        <div id="transCode" class="model trans-code">
+            <ul class="line-num">
+                <li>
+                    1
+                </li>
+            </ul>
+            <pre><code id="code" class="hljs html"></code></pre>
+
+        </div>
+        <div class="btns">
+            <button id="transBtn">转换</button>
+            <button id="copyBtn">转换</button>
+        </div>
+    </div>
+
+    <script src="../static/js/highlight.pack.js"></script>
+    <script src="../static/js/jquery-1.12.4.js"></script>
+    <script>
+
+        var textBox = document.getElementById('textBox')
+        var code = document.getElementById('code')
+
+        hljs.initHighlightingOnLoad();
+        hljs.configure({
+            tabReplace: '    ',
+            useBE: true,
+        })
+        // 获取ajax 返回结果
+        async function test() {
+            const data = await $.ajax({
+                url: 'http://localhost:9999',
+                type: 'post',
+                dataType: 'json',
+            })
+            let text = data.data
+
+            // 得到text 后开始处理数据：
+            console.log(text)
+
+            // 用pre标签 ， 保留 空格
+            // 用highlight 将所有 后端请求来的数据先进行 高亮处理 
+            // htghlight 方法返回一个对象 （详见官网）
+            var a = hljs.highlight('html', text)
+            console.log(a)
+            code.innerHTML = a.value
+
+            var codeH = code.offsetHeight - 20
+            var lineNum = codeH / 20
+            console.log(codeH)
+            var lineNumBox = code.parentNode.parentNode.getElementsByClassName('line-num')[0]
+            //    .style.height = codeH + 'px'
+
+            var str = ''
+            for (var i = 0; i < lineNum; i++) {
+                var line = i + 1
+                str += ('<li>' + line + '</li>')
+            }
+
+            lineNumBox.innerHTML = str
+        }
+
+        // 得到html 字符串
+        var text = test()
+
+
+        function createTransCodeBox() {
+            var div = document.createElement('div')
+            div.className = 'trans-code'
+            div.innerHTML = `
+                <ul class="line-num">
+                    <li>
+                        1
+                    </li>
+                </ul>
+                <pre><code class="hljs code html"></code></pre>
+            `
+        }
+    </script>
+</body>
+
+</html>
