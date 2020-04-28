@@ -7,64 +7,66 @@
     <title>代码保存页</title>
 
     <link rel="stylesheet" href="../static/css/highjs/railscasts.css">
-    <style>
-        * {
-            padding: 0;
-            margin: 0;
-            line-height: 20px;
-        }
-
-        li {
-            list-style: none;
-        }
-
-        .hljs {
-            padding: 10px;
-        }
-
-        .trans-code {
-            position: relative;
-            vertical-align: middle;
-        }
-
-        .trans-code pre {
-            padding: 0;
-            margin-left: 50px;
-        }
-
-        .trans-code .line-num {
-            position: absolute;
-            background-color: #232323;
-            width: 50px;
-            border-right: 1px solid grey;
-            padding: 10px 0;
-            color: rgb(255, 220, 191);
-            text-align: right;
-        }
-
-        .trans-code .line-num li {
-            padding-right: 8px;
-            font-size: 13px;
-        }
-
-        .trans-code .copy-btn {
-            position: absolute;
-            right: 0;
-            top: 0;
-            padding: 4px 8px;
-            margin: 5px;
-            border-radius: 5px;
-            background-color: rgb(173, 183, 190);
-            color: #fff;
-            outline: none
-        }
-    </style>
 
 </head>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        line-height: 20px;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    .hljs {
+        padding: 10px;
+    }
+
+    .trans-code {
+        position: relative;
+        vertical-align: middle;
+    }
+
+    .trans-code pre {
+        padding: 0;
+        margin-left: 50px;
+    }
+
+    .trans-code .line-num {
+        position: absolute;
+        background-color: #232323;
+        width: 50px;
+        border-right: 1px solid grey;
+        padding: 10px 0;
+        color: rgb(255, 220, 191);
+        text-align: right;
+    }
+
+    .trans-code .line-num li {
+        padding-right: 8px;
+        font-size: 13px;
+    }
+
+    .trans-code .copy-btn {
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 4px 8px;
+        margin: 5px;
+        border-radius: 5px;
+        background-color: rgb(173, 183, 190);
+        color: #fff;
+        outline: none
+    }
+</style>
 
 <body>
-    <script src="../static/js/jquery-1.12.4.js" ></script>
+
+
     <script src="../static/js/highlight.pack.js"></script>
+    <script src="../static/js/jquery-1.12.4.js"></script>
     <script>
 
         // 创建博客内容
@@ -118,6 +120,7 @@
                 // 添加行数：
                 var codeH = codeBox.offsetHeight - 20
                 var lineNum = codeH / 20
+                console.log(codeH)
                 var lineNumBox = codeBox.parentNode.parentNode.getElementsByClassName('line-num')[0]
                 var str = ''
                 for (var i = 0; i < lineNum; i++) {
@@ -157,7 +160,7 @@
                         createLineNum(codeBox)
 
                         // 添加复制功能：
-                        copyBtn.addEventListener('click', function () {
+                        copyBtn.addEventListener('click', function() {
                             copyTxt(hCode.code)
                         })
                     }
@@ -182,8 +185,6 @@
                 alert('复制成功')
             }
         }
-    </script>
-    <script>
     </script>
 </body>
 
